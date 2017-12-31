@@ -8,6 +8,7 @@ const cors = require('cors');
 const materielRoutes = require('./api/routes/materiel');
 const clientRoutes = require('./api/routes/client');
 const typeMaterielRoutes = require('./api/routes/typeMateriel');
+const contratRoutes = require('./api/routes/contrat');
 
 // Log toutes les req
 app.use(morgan('dev'));
@@ -23,6 +24,7 @@ app.use(cors());
 app.use('/materiels', materielRoutes);
 app.use('/clients', clientRoutes);
 app.use('/typeMateriel', typeMaterielRoutes);
+app.use('/contrats', contratRoutes);
 
 //Gestion des erreurs, ce middleware s'active si aucune des routes ne correspond
 app.use((req, res, next) => {
