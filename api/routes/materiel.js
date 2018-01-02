@@ -65,12 +65,10 @@ router.patch('/:idMateriel', (req, res, next) => {
 			console.log(err);
 			res.status(500).json({err});
 		} else {
-			const nbJoursLoues = req.body.nbJoursLoues || data[0].nbJoursLoues;
 			const montantCaution = req.body.montantCaution || data[0].montantCaution;
 			const idTypeMateriel = req.body.idTypeMateriel || data[0].idTypeMateriel;
-			const idContrat = req.body.idContrat || data[0].idContrat;
 			const libelle = req.body.libelle || data[0].libelle;
-			mysqlConnexion.query("update materiel set nbJoursLoues = " + nbJoursLoues + ", montantCaution = " + "'" + montantCaution + "', idTypeMateriel = " + "'" + idTypeMateriel + "', idContrat = " + "'" + idContrat + "', libelle = " + "'" + libelle + "' where idMateriel = " + idMateriel, (err, data) => {
+			mysqlConnexion.query("update materiel set montantCaution = " + "'" + montantCaution + "', idTypeMateriel = " + "'" + idTypeMateriel + "', libelle = " + "'" + libelle + "' where idMateriel = " + idMateriel, (err, data) => {
 				if (err) {
 					console.log(err);
 					res.status(500).json(err);
