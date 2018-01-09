@@ -24,7 +24,7 @@ router.get('/:idTechnicien', (req, res, next) => {
 	});
 });
 
-router.post('/inscription', (req, res, next) => { // INSCRIPTION
+router.post('/', (req, res, next) => { // INSCRIPTION
 	const nom = req.body.nom;
 	const prenom = req.body.prenom;
 	const telephone = req.body.telephone;
