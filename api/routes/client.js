@@ -1,6 +1,7 @@
 const express = require ('express');
 const router = express.Router();
 const mysqlConnexion = require('../../sql/connexion');
+const sha1 = require('sha1');
 
 router.get('/', (req, res, next) => {
 	mysqlConnexion.query('select * from client', (err, data) => {
@@ -14,7 +15,7 @@ router.get('/', (req, res, next) => {
 
 router.post('/connexion', (req, res, next) => { // CONNEXION
 	const email = req.body.email;
-	const mdp = req.body.mdp;
+	const mdp = sha1(req.body.mdp);
 	if (email && mdp) {
 		mysqlConnexion.query('select * from client where email = ' + "'" + email + "'" + ' and mdp = ' + "'" + mdp + "'", (err, data) => {
 			if (err) {
@@ -52,7 +53,7 @@ router.post('/', (req, res, next) => { // INSCRIPTION
 		adresse: req.body.adresse,
 		telephone: req.body.telephone,
 		email: req.body.email,
-		mdp: req.body.mdp
+		mdp: sha1(req.body.mdp)
 	};
 	if (client.nom && client.adresse && client.telephone && client.email && client.mdp) {
 		mysqlConnexion.query('insert into client (nom, adresse, telephone, email, mdp) values (' + "'" + client.nom + "'" + ',' + "'" + client.adresse + "'" + ',' + "'" + client.telephone + "'" + ',' + "'" + client.email + "'" + ',' + "'" + client.mdp + "'" + ')', (err, data) => {
