@@ -19,8 +19,6 @@
 -- Table structure for table `client`
 --
 
-USE roille;
-
 DROP TABLE IF EXISTS `client`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -33,7 +31,7 @@ CREATE TABLE `client` (
   `mdp` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`idClient`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +40,7 @@ CREATE TABLE `client` (
 
 LOCK TABLES `client` WRITE;
 /*!40000 ALTER TABLE `client` DISABLE KEYS */;
-INSERT INTO `client` VALUES (53,'Malek Yagoub','39 rue Arago','0627502876','malek.yagoub@hotmail.fr','b3a500224a8157d7c961adaf1a9c85dba97a033b'),(54,'Linkky','18 eme','0600000000','linkky@test.fr','b3a500224a8157d7c961adaf1a9c85dba97a033b');
+INSERT INTO `client` VALUES (53,'Malek Yagoub','39 rue Arago','0627502876','malek.yagoub@hotmail.fr','b3a500224a8157d7c961adaf1a9c85dba97a033b'),(54,'Linkky','18 eme','0600000000','linkky@test.fr','b3a500224a8157d7c961adaf1a9c85dba97a033b'),(55,'Alexis','je sais pas','0677777777','aaze@fe.fr','b3a500224a8157d7c961adaf1a9c85dba97a033b'),(56,'MChouaki','aze','0666666666','testaze@a.fr','de271790913ea81742b7d31a70d85f50a3d3e5ae');
 /*!40000 ALTER TABLE `client` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -65,7 +63,7 @@ CREATE TABLE `contrat` (
   KEY `idMateriel` (`idMateriel`),
   CONSTRAINT `contrat_ibfk_1` FOREIGN KEY (`idMateriel`) REFERENCES `materiel` (`idMateriel`),
   CONSTRAINT `fk_client` FOREIGN KEY (`idClient`) REFERENCES `client` (`idClient`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,7 +72,7 @@ CREATE TABLE `contrat` (
 
 LOCK TABLES `contrat` WRITE;
 /*!40000 ALTER TABLE `contrat` DISABLE KEYS */;
-INSERT INTO `contrat` VALUES (20,'2018-01-04','2018-01-05',148,53,4),(21,'2018-01-08','2018-01-08',158,53,7),(22,'2018-01-12','2018-01-13',582,53,22),(23,'2018-01-08','2018-01-08',74,53,4),(24,'2018-01-11','2018-01-17',56,53,29);
+INSERT INTO `contrat` VALUES (31,'2018-01-18','2018-01-19',170,53,21);
 /*!40000 ALTER TABLE `contrat` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -92,12 +90,15 @@ CREATE TABLE `intervention` (
   `commentaire` varchar(255) DEFAULT NULL,
   `idTechnicien` int(11) DEFAULT NULL,
   `idContrat` int(11) DEFAULT NULL,
+  `idOrigine` int(11) DEFAULT NULL,
   PRIMARY KEY (`idIntervention`),
   KEY `fk_technicien` (`idTechnicien`),
   KEY `fk_contrat2` (`idContrat`),
+  KEY `idOrigine` (`idOrigine`),
   CONSTRAINT `fk_contrat2` FOREIGN KEY (`idContrat`) REFERENCES `contrat` (`idContrat`),
-  CONSTRAINT `fk_technicien` FOREIGN KEY (`idTechnicien`) REFERENCES `technicien` (`idTechnicien`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT `fk_technicien` FOREIGN KEY (`idTechnicien`) REFERENCES `technicien` (`idTechnicien`),
+  CONSTRAINT `intervention_ibfk_1` FOREIGN KEY (`idOrigine`) REFERENCES `origine` (`idOrigine`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -106,6 +107,7 @@ CREATE TABLE `intervention` (
 
 LOCK TABLES `intervention` WRITE;
 /*!40000 ALTER TABLE `intervention` DISABLE KEYS */;
+INSERT INTO `intervention` VALUES (1,'2018-01-19 15:42:00',5,'aze',5,31,1),(2,'2018-01-03 15:40:00',2,'aa',5,31,1),(13,'2018-01-02 21:07:00',4,'a',5,31,2),(18,'2018-01-02 12:30:00',5,'Réparation de la scie',5,31,3),(19,'2018-01-02 12:17:00',4,'azeazesdk,sdkjsnvkcjn',5,31,1);
 /*!40000 ALTER TABLE `intervention` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -124,7 +126,7 @@ CREATE TABLE `materiel` (
   PRIMARY KEY (`idMateriel`),
   KEY `idTypeMateriel` (`idTypeMateriel`),
   CONSTRAINT `materiel_ibfk_1` FOREIGN KEY (`idTypeMateriel`) REFERENCES `typeMateriel` (`idTypeMateriel`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -133,8 +135,32 @@ CREATE TABLE `materiel` (
 
 LOCK TABLES `materiel` WRITE;
 /*!40000 ALTER TABLE `materiel` DISABLE KEYS */;
-INSERT INTO `materiel` VALUES (4,74,1,'Bétonnière'),(5,63,1,'Burineur'),(6,42,4,'Agitateur de peinture'),(7,158,4,'Pistolet peinture'),(8,73,5,'Aspirateur eau'),(9,63,5,'Aspirateur poussière'),(10,47,5,'Cireuse de sol'),(11,171,5,'Autolaveuse'),(12,34,2,'Scie sauteuse'),(13,36,2,'Scie circulaire'),(14,47,2,'Scie sabre'),(15,33,2,'Ponceuse lustreuse'),(16,51,2,'Ponceuse à parquet'),(17,61,2,'Perforateur burineur'),(18,31,2,'Perforateur'),(19,64,3,'Groupe électrogène 2 kVA 230 V - essence'),(20,294,3,'Groupe électrogène 100 kVA 230 / 400 V - diesel'),(21,85,3,'Groupe électrogène 4.2 kVA 230 V - diesel'),(22,291,6,'Elévateur vert. élec. 12.0m 2p'),(23,387,6,'Elévateur articulé diesel 12.2m'),(24,89,6,'Echafaudage roulant aluminium 4.8m'),(25,109,6,'Echafaudage roulant aluminium 6.8m'),(26,56,6,'Echelle 11.15m 3 plans'),(27,24,6,'Echelle isolante 2.95m'),(28,3,7,'Bac de manutention 60x40x31'),(29,8,7,'Gant anti coupure'),(30,9,7,'Gant spécial froid'),(31,121,8,'Poste de soudure 230 V - 33 à 180 A'),(32,143,8,'Groupe de soudage 40 à 220 A - essence'),(33,51,8,'Cintreuse 230 V tubes cuivre, acier et inox'),(34,84,8,'Gèle-tube 230 V'),(35,74,8,'Pince à sertir automatique'),(36,47,8,'Pompe d\'épreuve manuelle'),(37,403,8,'Pompe à chape liquide'),(38,56,8,'Pompe à détartrer 230V'),(39,25,1,'Brise-béton 2200W, 115V'),(40,122,1,'Foreuse diamant 230V');
+INSERT INTO `materiel` VALUES (4,74,1,'Bétonnière'),(5,63,1,'Burineur'),(6,42,4,'Agitateur de peinture'),(7,158,4,'Pistolet peinture'),(8,73,5,'Aspirateur eau'),(9,63,5,'Aspirateur poussière'),(10,47,5,'Cireuse de sol'),(11,171,5,'Autolaveuse'),(12,34,2,'Scie sauteuse'),(13,36,2,'Scie circulaire'),(14,47,2,'Scie sabre'),(15,33,2,'Ponceuse lustreuse'),(16,51,2,'Ponceuse à parquet'),(17,61,2,'Perforateur burineur'),(18,31,2,'Perforateur'),(19,64,3,'Groupe électrogène 2 kVA 230 V - essence'),(20,294,3,'Groupe électrogène 100 kVA 230 / 400 V - diesel'),(21,85,3,'Groupe électrogène 4.2 kVA 230 V - diesel'),(22,291,6,'Elévateur vert. élec. 12.0m 2p'),(23,387,6,'Elévateur articulé diesel 12.2m'),(24,89,6,'Echafaudage roulant aluminium 4.8m'),(26,56,6,'Echelle 11.15m 3 plans'),(27,24,6,'Echelle isolante 2.95m'),(28,3,7,'Bac de manutention 60x40x31'),(29,8,7,'Gant anti coupure'),(30,9,7,'Gant spécial froid'),(31,121,8,'Poste de soudure 230 V - 33 à 180 A'),(32,143,8,'Groupe de soudage 40 à 220 A - essence'),(33,51,8,'Cintreuse 230 V tubes cuivre, acier et inox'),(34,84,8,'Gèle-tube 230 V'),(35,74,8,'Pince à sertir automatique'),(36,47,8,'Pompe d\'épreuve manuelle'),(37,403,8,'Pompe à chape liquide'),(38,56,8,'Pompe à détartrer 230V'),(39,25,1,'Brise-béton 2200W, 115V'),(40,122,1,'Foreuse diamant 230V'),(41,50,7,'je sais pas'),(44,150,7,'test');
 /*!40000 ALTER TABLE `materiel` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `origine`
+--
+
+DROP TABLE IF EXISTS `origine`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `origine` (
+  `idOrigine` int(11) NOT NULL AUTO_INCREMENT,
+  `libelle` varchar(255) NOT NULL,
+  PRIMARY KEY (`idOrigine`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `origine`
+--
+
+LOCK TABLES `origine` WRITE;
+/*!40000 ALTER TABLE `origine` DISABLE KEYS */;
+INSERT INTO `origine` VALUES (1,'Installation'),(2,'Entretien'),(3,'Réparation');
+/*!40000 ALTER TABLE `origine` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -198,4 +224,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-01-09 10:51:11
+-- Dump completed on 2018-01-16 15:19:14

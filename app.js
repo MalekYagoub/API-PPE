@@ -10,6 +10,8 @@ const clientRoutes = require('./api/routes/client');
 const typeMaterielRoutes = require('./api/routes/typeMateriel');
 const contratRoutes = require('./api/routes/contrat');
 const technicienRoutes = require('./api/routes/technicien');
+const origineRoutes = require('./api/routes/origine');
+const interventionRoutes = require('./api/routes/intervention');
 
 // Log toutes les req
 app.use(morgan('dev'));
@@ -27,6 +29,8 @@ app.use('/clients', clientRoutes);
 app.use('/typeMateriel', typeMaterielRoutes);
 app.use('/contrats', contratRoutes);
 app.use('/techniciens', technicienRoutes);
+app.use('/origines', origineRoutes);
+app.use('/interventions', interventionRoutes);
 
 //Gestion des erreurs, ce middleware s'active si aucune des routes ne correspond
 app.use((req, res, next) => {
