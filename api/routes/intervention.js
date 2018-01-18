@@ -2,7 +2,21 @@ const express = require ('express');
 const router = express.Router();
 const mysqlConnexion = require('../../sql/connexion');
 
+router.get('/vueIntervention', (req, res, next) => {
+	mysqlConnexion.query('select * from vueIntervention', (err, data) => {
+		console.log("vue intervention");
+		if (err) {
+			console.log(err);
+			res.status(500).json({err});
+		}
+		res.status(200).json(data);
+	});
+});
+
+// create view vueIntervention as select intervention.idIntervention, intervention.dateHeureIntervention, intervention.tempsHeures, intervention.commentaire, technicien.prenom, technicien.nom, origine.libelle from [intervention] inner join technicien on intervention.idTechnicien = technicien.idTechnicien inner join origine on intervention.idOrigine = origine.idOrigine;
+
 router.get('/:idIntervention', (req, res, next) => {
+	const idIntervention = req.params.idIntervention;
 	mysqlConnexion.query('select * from intervention where idIntervention = ' + idIntervention, (err, data) => {
 		if (err) {
 			console.log(err);
@@ -14,16 +28,6 @@ router.get('/:idIntervention', (req, res, next) => {
 
 router.get('/', (req, res, next) => {
 	mysqlConnexion.query('select * from intervention', (err, data) => {
-		if (err) {
-			console.log(err);
-			res.status(500).json({err});
-		}
-		res.status(200).json(data);
-	});
-});
-
-router.get('/vueIntervention', (req, res, next) => {
-	mysqlConnexion.query('select * from vueIntervention', (err, data) => {
 		if (err) {
 			console.log(err);
 			res.status(500).json({err});
