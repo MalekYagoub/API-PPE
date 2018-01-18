@@ -22,6 +22,16 @@ router.get('/', (req, res, next) => {
 	});
 });
 
+router.get('/vueIntervention', (req, res, next) => {
+	mysqlConnexion.query('select * from vueIntervention', (err, data) => {
+		if (err) {
+			console.log(err);
+			res.status(500).json({err});
+		}
+		res.status(200).json(data);
+	});
+});
+
 router.post('/', (req, res, next) => {
 	console.log(req.body);
 	const intervention = {
