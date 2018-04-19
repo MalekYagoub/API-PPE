@@ -13,6 +13,17 @@ router.get('/', (req, res, next) => {
 	});
 });
 
+router.get('/email/:email', (req, res, next) => {
+	const email = req.params.email;
+	mysqlConnexion.query('select * from technicien where email = ' + email, (err, data) => {
+		if (err) {
+			console.log(err);
+			res.status(500).json({err});
+		}
+		res.status(200).json(data);
+	});
+});
+
 router.get('/:idTechnicien', (req, res, next) => {
 	const idTechnicien = req.params.idTechnicien;
 	mysqlConnexion.query('select * from contrat where idTechnicien = ' + idTechnicien, (err, data) => {

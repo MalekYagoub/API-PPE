@@ -13,7 +13,7 @@ router.get('/vueIntervention', (req, res, next) => {
 	});
 });
 
-// create view vueIntervention as select intervention.idIntervention, intervention.dateHeureIntervention, intervention.tempsHeures, intervention.commentaire, technicien.prenom, technicien.nom, origine.libelle from [intervention] inner join technicien on intervention.idTechnicien = technicien.idTechnicien inner join origine on intervention.idOrigine = origine.idOrigine;
+// create view vueIntervention as select intervention.idIntervention, intervention.dateHeureIntervention, intervention.tempsHeures, intervention.commentaire, technicien.prenom, technicien.nom, origine.libelle from intervention inner join technicien on intervention.idTechnicien = technicien.idTechnicien inner join origine on intervention.idOrigine = origine.idOrigine;
 
 router.get('/:idIntervention', (req, res, next) => {
 	const idIntervention = req.params.idIntervention;
